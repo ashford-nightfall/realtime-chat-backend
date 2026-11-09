@@ -9,6 +9,8 @@ import { User } from './entities/user.entity.js';
 import { UsersModule } from './users.module.js';
 import { Chat } from './entities/chat.entity.js';
 import { ChatsModule } from './chats.module.js';
+import { Message } from './entities/message.entity.js';
+import { MessagesModule } from './messages.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -31,7 +33,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
         username: configService.get('DB_USERNAME'),
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_NAME'),
-        entities: [User, Chat],
+        entities: [User, Chat, Message],
         synchronize: true,
         logging: true,
       }),
@@ -39,6 +41,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     }),
     UsersModule,
     ChatsModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
