@@ -11,10 +11,10 @@ export class User {
   @PrimaryColumn('uuid', { default: () => 'uuidv7()' })
   id: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text', unique: true })
   email: string;
 
-  @Column()
+  @Column({ type: 'text' })
   password: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
