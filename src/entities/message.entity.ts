@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryColumn,
   type Relation,
@@ -22,9 +23,11 @@ export class Message {
   read: boolean;
 
   @ManyToOne(() => User, (user) => user.messages)
+  @JoinColumn({ name: 'user_id' })
   user: Relation<User>;
 
   @ManyToOne(() => Chat, (chat) => chat.messages)
+  @JoinColumn({ name: 'chat_id' })
   chat: Chat;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
