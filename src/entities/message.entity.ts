@@ -4,6 +4,7 @@ import {
   Entity,
   ManyToOne,
   PrimaryColumn,
+  type Relation,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from './user.entity.js';
@@ -21,7 +22,7 @@ export class Message {
   read: boolean;
 
   @ManyToOne(() => User, (user) => user.messages)
-  user: User;
+  user: Relation<User>;
 
   @ManyToOne(() => Chat, (chat) => chat.messages)
   chat: Chat;

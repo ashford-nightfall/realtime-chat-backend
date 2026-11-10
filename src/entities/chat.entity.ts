@@ -3,9 +3,11 @@ import {
   Entity,
   OneToMany,
   PrimaryColumn,
+  type Relation,
   UpdateDateColumn,
 } from 'typeorm';
 import { Message } from './message.entity.js';
+import { ChatParticipant } from './chat-participant.entity.js';
 
 @Entity()
 export class Chat {
@@ -14,6 +16,9 @@ export class Chat {
 
   @OneToMany(() => Message, (message) => message.chat)
   messages: Message[];
+
+  @OneToMany(() => ChatParticipant, (chatParticipant) => chatParticipant.chat)
+  chatParticipants: Relation<ChatParticipant[]>;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
