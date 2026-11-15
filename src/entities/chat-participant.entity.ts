@@ -17,11 +17,17 @@ export class ChatParticipant {
   @PrimaryColumn('uuid', { default: () => 'uuidv7()' })
   id: string;
 
-  @ManyToOne(() => User, (user) => user.chatParticipants)
+  @ManyToOne(() => User, (user) => user.chatParticipants, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: Relation<User>;
 
-  @ManyToOne(() => Chat, (chat) => chat.chatParticipants)
+  @ManyToOne(() => Chat, (chat) => chat.chatParticipants, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'chat_id' })
   chat: Relation<Chat>;
 
