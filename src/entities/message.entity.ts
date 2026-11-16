@@ -22,6 +22,9 @@ export class Message {
   @Column({ type: 'boolean' })
   read: boolean;
 
+  @Column({ name: 'read_by', type: 'uuid' })
+  readBy: string;
+
   @ManyToOne(() => User, (user) => user.messages, {
     nullable: true,
     onDelete: 'SET NULL',
