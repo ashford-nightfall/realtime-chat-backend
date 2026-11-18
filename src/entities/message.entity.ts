@@ -1,21 +1,10 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryColumn,
-  type Relation,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, type Relation } from 'typeorm';
 import { User } from './user.entity.js';
 import { Chat } from './chat.entity.js';
+import { BaseEntity } from './base.entity.js';
 
 @Entity()
-export class Message {
-  @PrimaryColumn('uuid', { default: () => 'uuidv7()' })
-  id: string;
-
+export class Message extends BaseEntity {
   @Column({ type: 'text' })
   text: string;
 
@@ -38,10 +27,4 @@ export class Message {
   })
   @JoinColumn({ name: 'chat_id' })
   chat: Chat;
-
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
-  createdAt: string;
-
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
-  updatedAt: string;
 }
