@@ -1,0 +1,47 @@
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+  type Relation,
+  UpdateDateColumn,
+} from 'typeorm';
+import { User } from './user.entity.js';
+import { Chat } from './chat.entity.js';
+
+@Entity()
+export class Message {
+  @PrimaryColumn('uuid', { default: () => 'uuidv7()' })
+  id: string;
+
+  @Column({ type: 'text' })
+  text: string;
+
+  @Column({ type: 'boolean' })
+  read: boolean;
+
+  @Column({ name: 'read_by', type: 'uuid' })
+  readBy: string;
+
+  @ManyToOne(() => User, (user) => user.messages, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'user_id' })
+  user: Relation<User> | null;
+
+  @ManyToOne(() => Chat, (chat) => chat.messages, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'chat_id' })
+  chat: Chat;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  createdAt: string;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  updatedAt: string;
+}
