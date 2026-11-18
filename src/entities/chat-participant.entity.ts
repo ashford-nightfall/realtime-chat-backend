@@ -1,4 +1,11 @@
-import { Entity, JoinColumn, ManyToOne, type Relation, Unique } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  type Relation,
+  Unique,
+} from 'typeorm';
 import { Chat } from './chat.entity.js';
 import { User } from './user.entity.js';
 import { BaseEntity } from './base.entity.js';
@@ -19,4 +26,7 @@ export class ChatParticipant extends BaseEntity {
   })
   @JoinColumn({ name: 'chat_id' })
   chat: Relation<Chat>;
+
+  @Column({ name: 'chat_id', type: 'uuid' })
+  chatId: string;
 }
