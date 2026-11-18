@@ -1,22 +1,18 @@
 import {
-  CreateDateColumn,
+  Column,
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryColumn,
   type Relation,
   Unique,
-  UpdateDateColumn,
 } from 'typeorm';
 import { Chat } from './chat.entity.js';
 import { User } from './user.entity.js';
+import { BaseEntity } from './base.entity.js';
 
 @Entity()
 @Unique(['user', 'chat'])
-export class ChatParticipant {
-  @PrimaryColumn('uuid', { default: () => 'uuidv7()' })
-  id: string;
-
+export class ChatParticipant extends BaseEntity {
   @ManyToOne(() => User, (user) => user.chatParticipants, {
     nullable: false,
     onDelete: 'CASCADE',
@@ -31,9 +27,6 @@ export class ChatParticipant {
   @JoinColumn({ name: 'chat_id' })
   chat: Relation<Chat>;
 
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
-  updatedAt: Date;
+  @Column({ name: 'chat_id', type: 'uuid' })
+  chatId: string;
 }
