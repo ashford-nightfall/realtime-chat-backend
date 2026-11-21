@@ -5,14 +5,14 @@ import { AppController } from './app.controller.js';
 import { AppService } from './app.service.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { User } from './entities/user.entity.js';
-import { UsersModule } from './users.module.js';
-import { Chat } from './entities/chat.entity.js';
-import { ChatsModule } from './chats.module.js';
-import { Message } from './entities/message.entity.js';
-import { MessagesModule } from './messages.module.js';
-import { ChatParticipant } from './entities/chat-participant.entity.js';
-import { ChatParticipantsModule } from './chat-participants.module.js';
+import { User } from '../entities/user.entity.js';
+import { Chat } from '../entities/chat.entity.js';
+import { Message } from '../entities/message.entity.js';
+import { ChatParticipant } from '../entities/chat-participant.entity.js';
+import { UsersModule } from './chat/users.module.js';
+import { ChatsModule } from './chat/chats.module.js';
+import { MessagesModule } from './chat/messages.module.js';
+import { ChatParticipantsModule } from './chat/chat-participants.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
