@@ -21,6 +21,6 @@ export class ChatParticipant extends BaseEntity {
   @JoinColumn({ name: "chat_id" })
   chat: Relation<Chat>;
 
-  @Column({ name: "chat_id", type: "uuid" })
+  @Column({ name: "chat_id" })
   chatId: string;
 }
