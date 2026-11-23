@@ -13,6 +13,7 @@ import { ChatParticipantsModule } from "./chat/chat-participants.module.js";
 import { ChatsModule } from "./chat/chats.module.js";
 import { MessagesModule } from "./chat/messages.module.js";
 import { UsersModule } from "./chat/users.module.js";
+import { CredentialsModule } from './credentials/credentials.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -46,6 +47,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     MessagesModule,
     ChatParticipantsModule,
     AuthModule,
+    CredentialsModule,
   ],
 })
 export class AppModule {}
