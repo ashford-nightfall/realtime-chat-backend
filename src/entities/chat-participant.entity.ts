@@ -1,32 +1,25 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  type Relation,
-  Unique,
-} from 'typeorm';
-import { Chat } from './chat.entity.js';
-import { User } from './user.entity.js';
-import { BaseEntity } from './base.entity.js';
+import { Column, Entity, JoinColumn, ManyToOne, type Relation, Unique } from "typeorm";
+import { Chat } from "./chat.entity.js";
+import { User } from "./user.entity.js";
+import { BaseEntity } from "./base.entity.js";
 
 @Entity()
-@Unique(['user', 'chat'])
+@Unique(["user", "chat"])
 export class ChatParticipant extends BaseEntity {
   @ManyToOne(() => User, (user) => user.chatParticipants, {
     nullable: false,
-    onDelete: 'CASCADE',
+    onDelete: "CASCADE",
   })
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: "user_id" })
   user: Relation<User>;
 
   @ManyToOne(() => Chat, (chat) => chat.chatParticipants, {
     nullable: false,
-    onDelete: 'CASCADE',
+    onDelete: "CASCADE",
   })
-  @JoinColumn({ name: 'chat_id' })
+  @JoinColumn({ name: "chat_id" })
   chat: Relation<Chat>;
 
-  @Column({ name: 'chat_id', type: 'uuid' })
+  @Column({ name: "chat_id" })
   chatId: string;
 }
