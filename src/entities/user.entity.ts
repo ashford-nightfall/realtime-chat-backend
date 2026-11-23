@@ -1,20 +1,10 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryColumn,
-  type Relation,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, type Relation } from 'typeorm';
 import { Message } from './message.entity.js';
 import { ChatParticipant } from './chat-participant.entity.js';
+import { BaseEntity } from './base.entity.js';
 
 @Entity()
-export class User {
-  @PrimaryColumn('uuid', { default: () => 'uuidv7()' })
-  id: string;
-
+export class User extends BaseEntity {
   @Column({ type: 'text', unique: true })
   email: string;
 
@@ -26,10 +16,4 @@ export class User {
 
   @OneToMany(() => ChatParticipant, (chatParticipant) => chatParticipant.user)
   chatParticipants: Relation<ChatParticipant[]>;
-
-  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
-  updatedAt: Date;
 }
