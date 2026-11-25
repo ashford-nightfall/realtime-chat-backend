@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
@@ -17,5 +17,24 @@ export class AuthService {
   async register(createUserDto: CreateUserDto) {
     const hashedPassword = await this.credentialsService.hashPassword(createUserDto.password);
     return await this.userRepository.save({ ...createUserDto, password: hashedPassword });
+  }
+
+  async login(createUserDto: CreateUserDto) {
+    const user = await this.userRepository.findOneBy({ email: createUserDto.email });
+
+    if (!user) {
+      throw new UnauthorizedException("User is not found");
+    }
+
+    const isPasswordValid = await this.credentialsService.checkPassword({
+      password: createUserDto.password,
+      storedHash: user.password,
+    });
+
+    if (!isPasswordValid) {
+      throw new UnauthorizedException("Invalid password");
+    }
+
+    return user;
   }
 }

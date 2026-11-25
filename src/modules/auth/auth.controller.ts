@@ -17,4 +17,12 @@ export class AuthController {
 
     return rest;
   }
+
+  @Post("/login")
+  @UsePipes(new ZodValidationPipe(createUserSchema))
+  async login(@Body() createUserDto: CreateUserDto) {
+    const user = await this.authService.login(createUserDto);
+
+    return user;
+  }
 }
