@@ -2,16 +2,16 @@ import { Body, Controller, Post, UsePipes } from "@nestjs/common";
 
 import { ZodValidationPipe } from "../../common/pipes/zod-validation.pipe.js";
 import { AuthService } from "./auth.service.js";
-import { type CreateUserDto, createUserSchema } from "./dto/register.dto.js";
+import { type AuthUserDto, authUserSchema } from "./dto/register.dto.js";
 
 @Controller("auth")
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Post("/register")
-  @UsePipes(new ZodValidationPipe(createUserSchema))
-  async register(@Body() createUserDto: CreateUserDto) {
-    const user = await this.authService.register(createUserDto);
+  @UsePipes(new ZodValidationPipe(authUserSchema))
+  async register(@Body() authUserDto: AuthUserDto) {
+    const user = await this.authService.register(authUserDto);
 
     const { password: _, ...rest } = user;
 
@@ -19,9 +19,9 @@ export class AuthController {
   }
 
   @Post("/login")
-  @UsePipes(new ZodValidationPipe(createUserSchema))
-  async login(@Body() createUserDto: CreateUserDto) {
-    const user = await this.authService.login(createUserDto);
+  @UsePipes(new ZodValidationPipe(authUserSchema))
+  async login(@Body() authUserDto: AuthUserDto) {
+    const user = await this.authService.login(authUserDto);
 
     return user;
   }

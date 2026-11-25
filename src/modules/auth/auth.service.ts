@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 
 import { User } from "../../entities/user.entity.js";
 import { CredentialsService } from "../credentials/credentials.service.js";
-import { CreateUserDto } from "./dto/register.dto.js";
+import { AuthUserDto } from "./dto/register.dto.js";
 
 @Injectable()
 export class AuthService {
@@ -14,20 +14,20 @@ export class AuthService {
     private readonly credentialsService: CredentialsService,
   ) {}
 
-  async register(createUserDto: CreateUserDto) {
-    const hashedPassword = await this.credentialsService.hashPassword(createUserDto.password);
-    return await this.userRepository.save({ ...createUserDto, password: hashedPassword });
+  async register(authUserDto: AuthUserDto) {
+    const hashedPassword = await this.credentialsService.hashPassword(authUserDto.password);
+    return await this.userRepository.save({ ...authUserDto, password: hashedPassword });
   }
 
-  async login(createUserDto: CreateUserDto) {
-    const user = await this.userRepository.findOneBy({ email: createUserDto.email });
+  async login(authUserDto: AuthUserDto) {
+    const user = await this.userRepository.findOneBy({ email: authUserDto.email });
 
     if (!user) {
       throw new UnauthorizedException("User is not found");
     }
 
     const isPasswordValid = await this.credentialsService.checkPassword({
-      password: createUserDto.password,
+      password: authUserDto.password,
       storedHash: user.password,
     });
 
