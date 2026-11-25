@@ -4,6 +4,7 @@ import { Repository } from "typeorm";
 
 import { User } from "../../entities/user.entity.js";
 import { CredentialsService } from "../credentials/credentials.service.js";
+import { TokensService } from "../tokens/tokens.service.js";
 import { AuthUserDto } from "./dto/register.dto.js";
 
 @Injectable()
@@ -12,6 +13,7 @@ export class AuthService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private readonly credentialsService: CredentialsService,
+    private readonly tokensService: TokensService,
   ) {}
 
   async register(authUserDto: AuthUserDto) {
@@ -35,6 +37,6 @@ export class AuthService {
       throw new UnauthorizedException("Invalid password");
     }
 
-    return user;
+    return this.tokensService.issueAccessToken(user.id);
   }
 }

@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { AuthenticationModule } from "@nestjs/authentication";
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { createObserveModule } from "@nestjs/observe";
@@ -13,7 +14,8 @@ import { ChatParticipantsModule } from "./chat/chat-participants.module.js";
 import { ChatsModule } from "./chat/chats.module.js";
 import { MessagesModule } from "./chat/messages.module.js";
 import { UsersModule } from "./chat/users.module.js";
-import { CredentialsModule } from './credentials/credentials.module.js';
+import { CredentialsModule } from "./credentials/credentials.module.js";
+import { TokensModule } from "./tokens/tokens.module.js";
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 
@@ -29,6 +31,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: "postgres",
         host: configService.get("DB_HOST"),
@@ -40,7 +43,16 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
         synchronize: true,
         logging: true,
       }),
+    }),
+    AuthenticationModule.forRootAsync({
+      imports: [ConfigModule],
       inject: [ConfigService],
+      globalGuard: false,
+      useFactory: (configService: ConfigService) => ({
+        accessToken: {
+          key: configService.getOrThrow<string>("JWT_SECRET"),
+        },
+      }),
     }),
     UsersModule,
     ChatsModule,
@@ -48,6 +60,7 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     ChatParticipantsModule,
     AuthModule,
     CredentialsModule,
+    TokensModule,
   ],
 })
 export class AppModule {}

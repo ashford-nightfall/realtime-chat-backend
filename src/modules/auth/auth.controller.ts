@@ -21,8 +21,6 @@ export class AuthController {
   @Post("/login")
   @UsePipes(new ZodValidationPipe(authUserSchema))
   async login(@Body() authUserDto: AuthUserDto) {
-    const user = await this.authService.login(authUserDto);
-
-    return user;
+    return await this.authService.login(authUserDto);
   }
 }
