@@ -1,7 +1,8 @@
-import { Entity, OneToMany, type Relation } from 'typeorm';
-import { Message } from './message.entity.js';
-import { ChatParticipant } from './chat-participant.entity.js';
-import { BaseEntity } from './base.entity.js';
+import { Entity, OneToMany, type Relation } from "typeorm";
+
+import { BaseEntity } from "./base.entity.js";
+import { ChatParticipant } from "./chat-participant.entity.js";
+import { Message } from "./message.entity.js";
 
 @Entity()
 export class Chat extends BaseEntity {

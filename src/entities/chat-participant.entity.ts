@@ -1,7 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, type Relation, Unique } from "typeorm";
+
+import { BaseEntity } from "./base.entity.js";
 import { Chat } from "./chat.entity.js";
 import { User } from "./user.entity.js";
-import { BaseEntity } from "./base.entity.js";
 
 @Entity()
 @Unique(["user", "chat"])
